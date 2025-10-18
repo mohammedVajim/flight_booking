@@ -1,0 +1,7 @@
+fastapi==0.119.0
+uvicorn==0.37.0
+SQLAlchemy==2.0.44
+aiosqlite==0.21.0
+
+
+#pip install -r requirements.txt
