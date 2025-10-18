@@ -1,0 +1,11 @@
+from sqlalchemy import Column, Integer, String
+from backend.database import Base  # import Base from your database.py
+
+class Airport(Base):
+    __tablename__ = "airports"
+
+    airport_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    name = Column(String, nullable=False)
+    city = Column(String, nullable=False)
+    country = Column(String, nullable=False)
+    code = Column(String, unique=True, nullable=False)
