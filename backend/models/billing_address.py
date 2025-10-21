@@ -13,3 +13,4 @@ class BillingAddress(Base):
     state = Column(String, nullable=False)
 
     booking = relationship("Booking", backref="billing_addresses")
+"""Billing address linked to each booking (for invoices or receipts)."""

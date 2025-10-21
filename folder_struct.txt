@@ -1,0 +1,26 @@
+flight_booking/
+|
+|---backend/
+|   |---__pycache__/
+|   |---models/
+|       |---__pycache__/
+|       |---__init__.py
+|       |---airport.py
+|       |---billing_address.py
+|       |---booking.py
+|       |---booking_meal.py
+|       |---booking_seat.py
+|       |---flight.py
+|       |---meal.py
+|       |---payment.py
+|       |---seat.py
+|       |---traveller.py
+|       |---user.py
+|    |__database.py
+|
+|---venv/
+|---.gitignore
+|---LICENSE
+|---main.py
+|---README.md
+|---requirements.txt

@@ -9,3 +9,4 @@ class Airport(Base):
     city = Column(String, nullable=False)
     country = Column(String, nullable=False)
     code = Column(String, unique=True, nullable=False)
+"""Airport model: stores airport name, city, country, and unique IATA code."""

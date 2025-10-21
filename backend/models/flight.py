@@ -25,3 +25,6 @@ class Flight(Base):
     # Define relationships for easier access if needed
     origin_airport = relationship("Airport", foreign_keys=[origin_airport_id])
     destination_airport = relationship("Airport", foreign_keys=[destination_airport_id])
+
+    seats = relationship("Seat", back_populates="flight", cascade="all, delete-orphan")
+
