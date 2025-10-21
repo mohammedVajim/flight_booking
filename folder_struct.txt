@@ -17,6 +17,10 @@ flight_booking/
 |       |---traveller.py
 |       |---user.py
 |    |__database.py
+|    |---routers/
+|        |---flight_routes.py
+|    |---__init__.py
+|    |---populate_sample_data.py
 |
 |---venv/
 |---.gitignore
