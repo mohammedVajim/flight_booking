@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from backend.database import Base  # import Base from your database.py
+from backend.database import Base 
 
 class Airport(Base):
     __tablename__ = "airports"

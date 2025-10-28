@@ -5,17 +5,18 @@ from backend.models import (
     billing_address, seat, booking_seat, meal, booking_meal, payment
 )
 from backend.routers import flight_routes
-from backend.utils.background_demand import simulate_demand  # ✅ NEW import
+from backend.utils.background_demand import simulate_demand  
 import asyncio
 
-# Create all DB tables
+from backend.routers import booking_routes
+
 Base.metadata.create_all(bind=engine)
 
-# Initialize FastAPI
 app = FastAPI(title="Flight Booking API")
 
-# Include routers
 app.include_router(flight_routes.router)
+
+app.include_router(booking_routes.router)
 
 
 @app.on_event("startup")
