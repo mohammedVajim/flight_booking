@@ -3,5 +3,12 @@ uvicorn==0.37.0
 SQLAlchemy==2.0.44
 aiosqlite==0.21.0
 
+email-validator   2.3.0      
+
 
 #pip install -r requirements.txt
+
+#pip install uvicorn, SQLALchemy, aiosqlite, fastapi
+#pip install email-validator    
+#for backend/routers/booking_routes.py and
+#backend/schemas/booking.py
