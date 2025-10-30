@@ -8,7 +8,17 @@ from backend.routers import flight_routes
 from backend.utils.background_demand import simulate_demand  
 import asyncio
 
+# from fastapi.middleware.cors import CORSMiddleware
+
 from backend.routers import booking_routes
+
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"], 
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
 
 Base.metadata.create_all(bind=engine)
 

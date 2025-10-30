@@ -44,60 +44,6 @@ def get_all_flights(db: Session = Depends(database.get_db)):
         })
     return results
 
-# ----------------------
-# 2. Search flights by origin, destination, and date + sorting
-# ----------------------
-# @router.get("/search")
-# def search_flights(params: FlightSearchParams = Depends(), db: Session = Depends(database.get_db)):
-#     """
-#     Search flights by origin city, destination city, and departure date (YYYY-MM-DD)
-#     Optional sorting: ?sort_by=price or ?sort_by=duration
-#     """
-#     origin_airport = aliased(models.airport.Airport)
-#     destination_airport = aliased(models.airport.Airport)
-
-#     query = (
-#         db.query(models.flight.Flight)
-#         .join(origin_airport, models.flight.Flight.origin_airport)
-#         .join(destination_airport, models.flight.Flight.destination_airport)
-#         .options(
-#             joinedload(models.flight.Flight.origin_airport),
-#             joinedload(models.flight.Flight.destination_airport)
-#         )
-#         .filter(origin_airport.city.ilike(f"%{params.origin}%"))
-#         .filter(destination_airport.city.ilike(f"%{params.destination}%"))
-#         .filter(models.flight.Flight.departure_time.like(f"{params.date}%"))
-#     )
-
-#     # ✅ Sorting logic
-#     if params.sort_by == "price":
-#         query = query.order_by(models.flight.Flight.base_fare)
-#     elif params.sort_by == "duration":
-#         query = query.order_by(models.flight.Flight.duration_minutes)
-
-#     flights = query.all()
-
-#     if not flights:
-#         raise HTTPException(status_code=404, detail="No flights found for given criteria")
-
-#     # ✅ Format response
-#     results = []
-#     for f in flights:
-#         results.append({
-#             "flight_code": f.flight_code,
-#             "company_name": f.company_name,
-#             "origin": f.origin_airport.city,
-#             "destination": f.destination_airport.city,
-#             "departure_time": f.departure_time,
-#             "arrival_time": f.arrival_time,
-#             "duration_minutes": f.duration_minutes,
-#             "stops": f.stops,
-#             "base_fare": f.base_fare,
-#             "travel_class": f.travel_class
-#         })
-
-#     return results
-
 @router.get("/search")
 def search_flights(
     origin: str = Query(..., description="Origin city name"),
@@ -106,10 +52,7 @@ def search_flights(
     sort_by: str = Query(None, description="Sort by 'price' or 'duration'"),
     db: Session = Depends(database.get_db)
 ):
-    """
-    Search flights by origin, destination, and date.
-    Supports optional sorting and integrates dynamic pricing.
-    """
+
     origin_airport = aliased(models.airport.Airport)
     destination_airport = aliased(models.airport.Airport)
 
@@ -127,7 +70,7 @@ def search_flights(
         .filter(models.flight.Flight.departure_time.like(f"{date}%"))
     )
 
-    # ✅ Apply sorting before fetching results
+    # Apply sorting before fetching results
     if sort_by == "price":
         query = query.order_by(models.flight.Flight.base_fare)
     elif sort_by == "duration":
@@ -137,7 +80,7 @@ def search_flights(
     if not flights:
         raise HTTPException(status_code=404, detail="No flights found for given criteria")
 
-    # ✅ Build response list with dynamic price
+    # Build response list with dynamic price
     results = []
     for f in flights:
         try:
@@ -156,11 +99,10 @@ def search_flights(
             "duration_minutes": f.duration_minutes,
             "stops": f.stops,
             "base_fare": f.base_fare,
-            "dynamic_price": dynamic_price,  # 💰 integrated
+            "dynamic_price": dynamic_price, 
             "travel_class": f.travel_class
         })
 
-    # ✅ Optional: Sort again by dynamic_price (since it’s calculated)
     if sort_by == "price":
         results.sort(key=lambda x: x["dynamic_price"])
     elif sort_by == "duration":
@@ -173,10 +115,7 @@ def search_flights(
 
 @router.post("/sync")
 def sync_external_flights(db: Session = Depends(database.get_db)):
-    """
-    Simulate fetching external flight schedules and insert into DB.
-    Only adds flights whose routes match existing airports.
-    """
+   
     external_flights = fetch_external_flights()
     added_count = 0
 
@@ -190,10 +129,8 @@ def sync_external_flights(db: Session = Depends(database.get_db)):
         ).first()
 
         if not origin or not destination:
-            # Skip if airport not found in DB
             continue
 
-        # Avoid duplicates (same code + date)
         existing = db.query(models.flight.Flight).filter(
             models.flight.Flight.flight_code == flight_data["flight_code"],
             models.flight.Flight.origin_airport_id == origin.airport_id,

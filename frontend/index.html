@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flygo - Book Flights</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="navbar">
+        <div class="logo">flygo</div>
+
+        <div class="nav-actions">
+            <button class="signin-btn">Sign In</button>
+        </div>
+    </header>
+
+    <!-- Search Container -->
+    <section class="search-box">
+        <div class="trip-type">
+            <button class="trip-btn active" id="oneway-btn">One Way</button>
+            <button class="trip-btn" id="roundtrip-btn">Round Trip</button>
+        </div>
+
+        <div class="search-form">
+            <input type="text" id="from" placeholder="From">
+            <input type="text" id="to" placeholder="To">
+            <input type="date" id="departure">
+            <input type="date" id="return" class="hidden">
+            <select id="class">
+                <option value="">traveller class</option>
+                <option value=""></option>
+            </select>
+            <button id="search-btn" class="search-btn">Search ></button>
+        </div>
+    </section>
+
+    <section class="results" id="results"></section>
+
+    <script src="script.js"></script>
+</body>
+</html>
